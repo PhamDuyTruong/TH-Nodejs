@@ -32,11 +32,31 @@ const getDetailStation = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     };
+};
+
+const updateStation = async (req, res) => {
+    const {id} = req.params;
+    const {name, address, province} = req.body;
+    try {
+        const detailStation = await Station.findOne({
+            where: {
+                id,
+            }
+        });
+        detailStation.name = name;
+        detailStation.address = address;
+        detailStation.province = province;
+        await detailStation.save();
+        res.status(200).send(detailStation);
+    } catch (error) {
+        res.status(500).send(error);
+    };
 }
 
 module.exports = {
     createStation,
     getAllStation,
-    getDetailStation
+    getDetailStation,
+    updateStation,
     
 }
