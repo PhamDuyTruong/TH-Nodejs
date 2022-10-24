@@ -1,5 +1,5 @@
 const {Station} = require("../models")
-
+const {checkExist} = require("../middleware/Validations/checkExist")
 const express = require("express");
 const {createStation, getAllStation, getDetailStation, updateStation, deleteStation} = require("../controllers/station.controllers")
 
@@ -8,21 +8,8 @@ const stationRouter = express.Router();
 stationRouter.post("/", createStation);
 stationRouter.get("/", getAllStation);
 stationRouter.get("/:id", getDetailStation);
-stationRouter.put("/:id", async (req, res, next) => {
-    const {id} = req.params;
-    const station = await Station.findOne({
-        where: {
-            id,
-        }
-    });
-    if(station){
-        next();
-    }else {
-        res.status(404).send("Không tìm thấy !!!");
-    }
-
-}, updateStation);
-stationRouter.delete("/:id", deleteStation);
+stationRouter.put("/:id", checkExist(Station), updateStation);
+stationRouter.delete("/:id", checkExist(Station), deleteStation);
 
 module.exports = {
     stationRouter,
