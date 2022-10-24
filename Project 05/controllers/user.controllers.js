@@ -7,13 +7,29 @@ const createUser = async (req, res) => {
     try {
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(password, salt);
-        const newUser= await User.create({name, email, password: hashPassword, numberPhone, type: "client"});
+        const newUser= await User.create({name, email, password: hashPassword, numberPhone});
         res.status(201).send(newUser);
     } catch (error) {
        res.status(500).send(error)
     }
    
 };
+
+const login = async (req, res) => {
+    const {email, password} = req.body;
+    const user = await User.findOne({
+        where: {
+            email,
+        }
+    });
+
+    const isAuth = bcrypt.compareSync(password, user.password);
+    if(isAuth){
+        res.status(200).send({message: "Đăng nhập thành công"});
+    }else{
+        res.status(500).send({message: "Tài khoản hoặc mật khẩu không đúng"});
+    }
+}
 
 const getAllUser = async (req, res) => {
     const {name} = req.query;
@@ -87,6 +103,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     createUser,
+    login,
     getAllUser,
     getDetailUser,
     updateUser,

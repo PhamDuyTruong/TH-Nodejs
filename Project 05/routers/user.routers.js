@@ -1,11 +1,12 @@
 const {User} = require("../models")
 const {checkExist} = require("../middleware/Validations/checkExist")
 const express = require("express");
-const {createUser, getAllUser, getDetailUser, updateUser, deleteUser} = require("../controllers/user.controllers")
+const {createUser, getAllUser, getDetailUser, updateUser, deleteUser, login} = require("../controllers/user.controllers")
 
 const userRouter = express.Router();
 
-userRouter.post("/", createUser);
+userRouter.post("/register", createUser);
+userRouter.post("/login", login);
 userRouter.get("/", getAllUser);
 userRouter.get("/:id", getDetailUser);
 userRouter.put("/:id", checkExist(User), updateUser);
