@@ -11,7 +11,17 @@ const createStation = async (req, res) => {
    
 };
 
+const getAllStation = async (req, res) => {
+    try {
+      const stationList =  await Station.findAll();
+      res.status(200).send(stationList);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
 module.exports = {
     createStation,
+    getAllStation
     
 }
