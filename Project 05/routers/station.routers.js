@@ -1,15 +1,16 @@
 const {Station} = require("../models")
-const {checkExist} = require("../middleware/Validations/checkExist")
+const {checkExist} = require("../middleware/Validations/checkExist");
+const {authenticate} = require("../middleware/auth/authenticate")
 const express = require("express");
 const {createStation, getAllStation, getDetailStation, updateStation, deleteStation} = require("../controllers/station.controllers")
 
 const stationRouter = express.Router();
 
-stationRouter.post("/", createStation);
+stationRouter.post("/", authenticate, createStation);
 stationRouter.get("/", getAllStation);
 stationRouter.get("/:id", getDetailStation);
 stationRouter.put("/:id", checkExist(Station), updateStation);
-stationRouter.delete("/:id", checkExist(Station), deleteStation);
+stationRouter.delete("/:id", authenticate, checkExist(Station), deleteStation);
 
 module.exports = {
     stationRouter,
