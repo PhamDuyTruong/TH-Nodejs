@@ -1,6 +1,7 @@
 const { Op } = require("sequelize")
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken")
 
 const createUser = async (req, res) => {
     const {name, email, password, numberPhone} = req.body;
@@ -23,12 +24,19 @@ const login = async (req, res) => {
         }
     });
 
-    const isAuth = bcrypt.compareSync(password, user.password);
-    if(isAuth){
-        res.status(200).send({message: "Đăng nhập thành công"});
-    }else{
-        res.status(500).send({message: "Tài khoản hoặc mật khẩu không đúng"});
+    if(user){
+        const isAuth = bcrypt.compareSync(password, user.password);
+        if(isAuth){
+            const token = jwt.sign({email: user.email, type: user.type}, "truong-1234", {expiresIn: 30 * 60}) 
+            res.status(200).send({message: "Đăng nhập thành công", token: token});
+        }else{
+            res.status(500).send({message: "Tài khoản hoặc mật khẩu không đúng"});
+        }
+    }else {
+        res.status(404).send({message: "Không tìm thấy email phù hợp !!!"});
     }
+
+
 }
 
 const getAllUser = async (req, res) => {
