@@ -11,10 +11,10 @@ userRouter.post("/login", login);
 const multer = require("multer");
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, "./public")
+        cb(null, "./public/images/avatars")
     },
     filename: function(req, file, cb){
-        cb(null, file.originalname) // dặt lại tên cho file
+        cb(null, Date.now() + "_" +  file.originalname) // dặt lại tên cho file
     }
 })
 const upload = multer({storage: storage })
