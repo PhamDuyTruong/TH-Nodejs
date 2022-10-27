@@ -7,6 +7,13 @@ const userRouter = express.Router();
 
 userRouter.post("/register", createUser);
 userRouter.post("/login", login);
+
+const multer = require("multer");
+const upload = multer({ dest: './uploads' })
+
+userRouter.post("/upload-avatar", upload.single('avatar'), (req, res) => {
+    res.send("Tính năng upload file")
+})
 userRouter.get("/", getAllUser);
 userRouter.get("/:id", getDetailUser);
 userRouter.put("/:id", checkExist(User), updateUser);
