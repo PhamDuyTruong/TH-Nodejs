@@ -9,7 +9,15 @@ userRouter.post("/register", createUser);
 userRouter.post("/login", login);
 
 const multer = require("multer");
-const upload = multer({ dest: './uploads' })
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, "./public")
+    },
+    filename: function(req, file, cb){
+        cb(null, file.originalname) // dặt lại tên cho file
+    }
+})
+const upload = multer({storage: storage })
 
 userRouter.post("/upload-avatar", upload.single('avatar'), (req, res) => {
     res.send("Tính năng upload file")
