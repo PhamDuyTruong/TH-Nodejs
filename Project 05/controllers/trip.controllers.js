@@ -1,4 +1,4 @@
-const {Trip} = require("../models") 
+const {Trip, Station} = require("../models") 
 
 const createTrip = async (req, res) => {
     try{
@@ -10,6 +10,27 @@ const createTrip = async (req, res) => {
     }
 };
 
+const getAllTrip = async (req, res) => {
+    try{
+    const tripList = await Trip.findAll({
+        include: [
+            {
+                model: Station, 
+                as: "from"
+            },
+            {
+                model: Station, 
+                as: "to"
+            }
+        ]
+    });
+    res.status(200).send(tripList)
+    }catch(error){
+        res.status(500).send(error);
+    }
+}
+
 module.exports= {
     createTrip,
+    getAllTrip,
 }
