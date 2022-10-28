@@ -42,10 +42,26 @@ const deleteTrip = async (req, res) => {
   }catch(error){
     res.status(500).send(error);
   }
+};
+
+const updateTrip = async (req, res) => {
+    const {id} = req.params;
+    const {fromStation, toStation, startTime, price} = req.body;
+    try {
+        await Trip.update({fromStation, toStation, startTime, price}, {
+            where: {
+                id,
+            }
+        });
+        res.send(` Đã update thành công trip có id là: ${id}`)
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
 module.exports= {
     createTrip,
     getAllTrip,
     deleteTrip,
+    updateTrip
 }
