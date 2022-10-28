@@ -17,7 +17,19 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + "_" +  file.originalname) // dặt lại tên cho file
     }
 })
-const upload = multer({storage: storage })
+const upload = multer({
+    storage: storage,
+    fileFilter: function(req, file, cb){
+        const extensionImageList = [".png", ".jpg"];
+        const extension = file.originalname.slice(-4);
+        const check = extensionImageList.includes(extension);
+        if(check){
+            cb(null, true);
+        }else{
+            cb(new Error("extention không hợp lệ"))
+        }
+    }
+})
 
 userRouter.post("/upload-avatar", upload.single('avatar'), (req, res) => {
     res.send("Tính năng upload file")
