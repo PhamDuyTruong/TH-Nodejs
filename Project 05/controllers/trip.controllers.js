@@ -28,9 +28,24 @@ const getAllTrip = async (req, res) => {
     }catch(error){
         res.status(500).send(error);
     }
+};
+
+const deleteTrip = async (req, res) => {
+    const {id} = req.params;
+    try{
+    await Trip.destroy({
+        where: {
+            id
+        }
+    });
+    res.send(`Đã xóa trip có id là: ${id}`);
+  }catch(error){
+    res.status(500).send(error);
+  }
 }
 
 module.exports= {
     createTrip,
     getAllTrip,
+    deleteTrip,
 }
