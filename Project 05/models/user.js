@@ -25,7 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     numberPhone: DataTypes.STRING,
-    type: DataTypes.STRING
+    avatar: DataTypes.STRING,
+    type: {type: DataTypes.STRING,
+      defaultValue: "CLIENT"
+    }
   }, {
     sequelize,
     modelName: 'User',

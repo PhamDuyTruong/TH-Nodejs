@@ -107,7 +107,25 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
+
 };
+
+const uploadAvatar = async (req, res) => {
+   
+    const {file} = req;
+    const urlImage = `http://localhost:8080/${file.path}`;
+    const {user} = req;
+    try{
+    const userFound = await User.findOne({
+            email: user.email
+    });
+    userFound.avatar = urlImage;
+    await userFound.save();
+    res.send(userFound);
+     }catch(error){
+        res.status(500).send(error);
+     }
+}
 
 module.exports = {
     createUser,
@@ -116,4 +134,5 @@ module.exports = {
     getDetailUser,
     updateUser,
     deleteUser,
+    uploadAvatar,
 }
