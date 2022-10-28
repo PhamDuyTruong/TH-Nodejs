@@ -1,14 +1,17 @@
 const { Op } = require("sequelize")
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const gravatar = require('gravatar');
 
 const createUser = async (req, res) => {
     const {name, email, password, numberPhone} = req.body;
     try {
+        // Tạo avatar mặc định
+        const avatarUrl = gravatar.url(email, {s: '100', r: 'x', d: 'retro'}, true);
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(password, salt);
-        const newUser= await User.create({name, email, password: hashPassword, numberPhone});
+        const newUser= await User.create({name, email, password: hashPassword, numberPhone, avatar: avatarUrl});
         res.status(201).send(newUser);
     } catch (error) {
        res.status(500).send(error)

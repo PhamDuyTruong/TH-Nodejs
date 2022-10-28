@@ -9,7 +9,9 @@ userRouter.post("/register", createUser);
 userRouter.post("/login", login);
 
 const multer = require("multer");
+const mkdirp = require('mkdirp')
 const { authenticate } = require("../middleware/auth/authenticate");
+
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
         cb(null, "./public/images/avatars")
