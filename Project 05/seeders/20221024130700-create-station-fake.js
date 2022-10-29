@@ -25,8 +25,21 @@ module.exports = {
         province: 'Đà Nẵng',
         createdAt: '2022-10-24 07:28:31',
         updatedAt: '2022-10-24 10:51:57',
+      },
+      {
+        name: 'Bến xe Biên Hòa',
+        address: '8 , QL 1K, Đ. Nguyễn Ái Quốc, Kp3, Thành phố Biên Hòa, Đồng Nai',
+        province: 'Đồng Nai',
+        createdAt: '2022-10-24 07:28:31',
+        updatedAt: '2022-10-24 10:51:57',
+      },
+      {
+        name: 'Bến xe Miền Đông',
+        address: 'Bình Thắng, Dĩ An, Bình Dương',
+        province: 'Bình Dương',
+        createdAt: '2022-10-24 07:28:31',
+        updatedAt: '2022-10-24 10:51:57',
       }
-    
     ], {});
   },
 

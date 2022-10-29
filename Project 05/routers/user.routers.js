@@ -1,12 +1,13 @@
 const {User} = require("../models")
 const {checkExist} = require("../middleware/Validations/checkExist")
 const express = require("express");
-const {createUser, getAllUser, getDetailUser, updateUser, deleteUser, login, uploadAvatar} = require("../controllers/user.controllers")
+const {createUser, getAllUser, getDetailUser, updateUser, deleteUser, login, uploadAvatar, getAllTrip} = require("../controllers/user.controllers")
 
 const userRouter = express.Router();
 
 userRouter.post("/register", createUser);
 userRouter.post("/login", login);
+userRouter.get("/all-trip", getAllTrip);
 
 const multer = require("multer");
 const mkdirp = require('mkdirp')

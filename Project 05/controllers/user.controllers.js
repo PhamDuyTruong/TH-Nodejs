@@ -1,5 +1,5 @@
 const { Op } = require("sequelize")
-const { User } = require("../models");
+const { User, sequelize } = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const gravatar = require('gravatar');
@@ -128,6 +128,22 @@ const uploadAvatar = async (req, res) => {
      }catch(error){
         res.status(500).send(error);
      }
+};
+
+const getAllTrip = async (req, res) => {
+    try{
+   const [results] = await sequelize.query(`
+    select users.name as userName, fromSta.name as fromStation, toSta.name as toStation from users
+    inner join tickets on users.id = tickets.user_id
+    inner join trips on trips.id = tickets.trip_id
+    inner join stations as fromSta on fromSta.id = trips.fromStation
+    inner join stations as toSta on toSta.id = trips.toStation
+    `);
+
+    res.send(results);
+    }catch(error){
+        res.status(500).send(error)
+    }
 }
 
 module.exports = {
@@ -138,4 +154,5 @@ module.exports = {
     updateUser,
     deleteUser,
     uploadAvatar,
+    getAllTrip,
 }
