@@ -7,6 +7,8 @@ var bodyParser = require("body-parser");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 
+const authorRouter = require("./routers/author");
+
 
 dotenv.config()
 
@@ -19,9 +21,7 @@ app.use(bodyParser.json({limit: "50mb"}));
 app.use(cors());
 app.use(morgan("common"));
 
-app.get("/api", (req, res) => {
-
-})
+app.use("/v1/author", authorRouter);
 
 app.listen(8000, () => {
     console.log("Server is running...");
