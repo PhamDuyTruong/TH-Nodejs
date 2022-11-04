@@ -3,8 +3,16 @@ import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButto
 import moment from 'moment';
 import MoreVert from "@material-ui/icons/MoreVert";
 import Favorite from '@material-ui/icons/Favorite';
+import {makeStyles} from "@material-ui/core/styles";
+
+const styles = makeStyles((theme) => ({
+    media: {
+        height: 150,
+      },
+}))
 
 function Post({post}) {
+    const classes = styles();
   return (
     <Card>
         <CardHeader
@@ -18,7 +26,7 @@ function Post({post}) {
           }
         >
         </CardHeader>
-        <CardMedia image="" title="Title"/>
+        <CardMedia image={post.attachment} title="Title" className={classes.media}/>
         <CardContent>
             <Typography variant="h5" color="textPrimary">
               {post.title}

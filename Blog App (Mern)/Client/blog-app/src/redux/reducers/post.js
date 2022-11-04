@@ -1,5 +1,5 @@
 import { INIT_STATE } from "../../constants";
-import { getPosts, getType } from "../actions";
+import { getPosts, getType, createPost } from "../actions";
 
 export default function postsReducer(state = INIT_STATE.posts, action){
     switch(action.type){
@@ -19,6 +19,11 @@ export default function postsReducer(state = INIT_STATE.posts, action){
                 return {
                     ...state,
                     isLoading: false,
+                }
+        case getType(createPost.createPostSuccess): 
+                return {
+                    ...state,
+                    data: [...state.data, action.payload]
                 }
         default:
             return state;
