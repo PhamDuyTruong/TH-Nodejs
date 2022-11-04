@@ -1,16 +1,16 @@
 import React from 'react';
 import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography} from '@material-ui/core';
-
+import moment from 'moment';
 import MoreVert from "@material-ui/icons/MoreVert";
 import Favorite from '@material-ui/icons/Favorite';
 
-function Post() {
+function Post({post}) {
   return (
     <Card>
         <CardHeader
           avatar={<Avatar>A</Avatar>}
-          title="This is title"
-          subheader="Nov 04, 2022"
+          title= {post.author}
+          subheader={moment(post.updatedAt).format('HH:MM MMM DD,YYYY')}
           action={
             <IconButton>
                 <MoreVert/>
@@ -21,17 +21,17 @@ function Post() {
         <CardMedia image="" title="Title"/>
         <CardContent>
             <Typography variant="h5" color="textPrimary">
-                This is Title post
+              {post.title}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-                This is Content post
+                {post.content}
             </Typography>
         </CardContent>
         <CardActions>
             <IconButton>
                 <Favorite />
                 <Typography component="span" color="textSecondary">
-                    10 likes
+                   {`${post.likeCount} likes`}
                 </Typography>
             </IconButton>
         </CardActions>
