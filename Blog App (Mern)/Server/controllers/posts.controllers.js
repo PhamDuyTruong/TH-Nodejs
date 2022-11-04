@@ -26,7 +26,7 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     try {
         const updatePost = req.body;
-        const post = await PostModel.findOne({_id: updatePost._id}, updatePost, {new: true});
+        const post = await PostModel.findOneAndUpdate({_id: updatePost._id}, updatePost, {new: true});
         res.status(200).json(post);
     } catch (error) {
         res.status(500).json({error: error});
