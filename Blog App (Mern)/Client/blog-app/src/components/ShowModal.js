@@ -1,12 +1,13 @@
 import React from 'react';
 import {Modal} from '@material-ui/core';
+import {useSelector} from 'react-redux'
 
 function ShowModal() {
-    
-  const body = "This is body modal";
+  const {isShow} = useSelector((state) => state.modal);
+  const body = <p>This is body modal</p>;
   return (
     <div>
-        <Modal open={false} onClose={{}}>
+        <Modal open={isShow} onClose={{}}>
             {body}
         </Modal>
     </div>

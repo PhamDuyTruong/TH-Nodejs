@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useCallback} from 'react';
+import {useDispatch} from 'react-redux';
 import {Container, Fab} from "@material-ui/core";
 import Header from '../components/Header';
 import PostList from '../components/PostList';
 import AddIcon from "@material-ui/icons/Add";
 import {makeStyles} from '@material-ui/core/styles';
+import {showModal} from '../redux/actions'
+import ShowModal from '../components/ShowModal';
 
 const styles = makeStyles((theme) => ({
   fab: {
@@ -15,11 +18,17 @@ const styles = makeStyles((theme) => ({
 
 function Homepage() {
   const classes = styles();
+  const dispatch = useDispatch();
+  const openCreatePostModal = useCallback(() => {
+    dispatch(showModal());
+  }, [dispatch]);
+
   return (
     <Container maxWidth="lg" className="">
         <Header />
         <PostList />
-        <Fab color="primary" className={classes.fab}>
+        <ShowModal />
+        <Fab color="primary" className={classes.fab} onClick={openCreatePostModal}>
            <AddIcon />
         </Fab>
     </Container>
