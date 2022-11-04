@@ -9,7 +9,7 @@ function PostList() {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.data);
 
-  console.log("[posts] ", posts);
+  // console.log("[posts] ", posts);
 
   useEffect(() => {
     dispatch(actions.getPosts.getPostsRequest())

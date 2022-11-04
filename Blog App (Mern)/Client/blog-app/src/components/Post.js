@@ -9,7 +9,7 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const styles = makeStyles((theme) => ({
     media: {
-        height: 150,
+        height: 200,
       },
 }))
 
