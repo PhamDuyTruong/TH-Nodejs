@@ -1,10 +1,11 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Modal} from '@material-ui/core';
 import {useSelector, useDispatch} from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
 import { Button, TextareaAutosize, TextField } from '@material-ui/core';
 import FileBase64 from 'react-file-base64';
-import { hideModal } from '../redux/actions';
+import { hideModal, createPost } from '../redux/actions';
+
 const styles = makeStyles((theme) => ({
   paper: {
     top: '50%',
@@ -36,14 +37,28 @@ const styles = makeStyles((theme) => ({
 }))
 
 function ShowModal() {
+  const [data, setData] = useState({
+    title: '',
+    content: '',
+    attachment: '',
+  });
   const {isShow} = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const classes = styles();
 
   const handleClose = useCallback(() => {
     dispatch(hideModal());
+    setData({
+      title: '',
+      content: '',
+      attachment: '',
+    });
+  }, [dispatch]);
 
-  }, [dispatch])
+  const handleSubmit = useCallback(() => {
+    dispatch(createPost.createPostRequest(data));
+    handleClose();
+  }, [data, dispatch, handleClose])
 
   const body = (
     <div className={classes.paper} id='simple-modal-title'>
@@ -53,23 +68,23 @@ function ShowModal() {
           className={classes.title}
           required
           label='Title'
-          value=""
-          onChange={{}}
+          value={data.title}
+          onChange={(e) => setData({ ...data, title: e.target.value })}
         />
         <TextareaAutosize
           className={classes.textarea}
           rowsMin={10}
           rowsMax={15}
           placeholder='Content...'
-          value=""
-          onChange={{}}
+          value={data.content}
+          onChange={(e) => setData({...data, content: e.target.value})}
         />
         <FileBase64
           accept='image/*'
           multiple={false}
           type='file'
-          value=""
-          onDone={{}}
+          value={data.attachment}
+          onDone={({ base64 }) => setData({ ...data, attachment: base64 })}
         />
         <div className={classes.footer}>
           <Button
@@ -77,7 +92,7 @@ function ShowModal() {
             color='primary'
             component='span'
             fullWidth
-            onClick={{}}
+            onClick={handleSubmit}
           >
             Create
           </Button>
