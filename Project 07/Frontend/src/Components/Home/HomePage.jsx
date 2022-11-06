@@ -15,17 +15,8 @@ const HomePage = () => {
   let axiosJwt = axios.create();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if(!user){
-      navigate("/login");
-    }
-    if(user?.accessToken){
-      getAllUsers(user?.accessToken, dispatch);
-    }
-  }, []);
-
   const handleDelete = (id) => {
-    deleteUser(user?.accessToken, dispatch, id);
+    deleteUser(user?.accessToken, dispatch, id, axiosJwt);
   };
 
   const refreshToken = async () => {
@@ -60,7 +51,16 @@ const HomePage = () => {
     (err) =>{
       return Promise.reject(err);
     }
-  )
+  );
+
+  useEffect(() => {
+    if(!user){
+      navigate("/login");
+    }
+    if(user?.accessToken){
+       getAllUsers(user?.accessToken, dispatch, axiosJwt);
+    }
+  }, [])
 
   return (
     <main className="home-container">
