@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux'
 import "./login.css";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from '../../redux/apiRequest';
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -11,7 +16,7 @@ const Login = () => {
             username: username,
             password: password
         };
-        
+        loginUser(newUser, dispatch, navigate);
     }
 
     return ( 
