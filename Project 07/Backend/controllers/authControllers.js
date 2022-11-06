@@ -43,7 +43,7 @@ const authController = {
                 }, 
                 process.env.MY_SECRETKEY,
                 {
-                    expiresIn: "30s"
+                    expiresIn: "30d"
                 }
                 );
                 const {password, ...others} = user._doc;

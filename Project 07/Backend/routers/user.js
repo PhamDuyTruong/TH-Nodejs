@@ -7,6 +7,6 @@ const router = require("express").Router();
 router.get("/",authMiddleware.verifyToken, userController.getAllUsers);
 
 //Delete user
-router.delete("/:id", userController.deleteUser);
+router.delete("/:id", authMiddleware.verifyTokenAndAdminAuth, userController.deleteUser);
 
 module.exports = router;
