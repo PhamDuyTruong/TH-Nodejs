@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loginFailure, loginStart, loginSuccess } from './authSlice';
+import { loginFailure, loginStart, loginSuccess, registerFailure, registerStart, registerSuccess } from './authSlice';
 
 export const loginUser = async(user, dispatch, navigate) => {
     dispatch(loginStart());
@@ -10,4 +10,15 @@ export const loginUser = async(user, dispatch, navigate) => {
     } catch (error) {
         dispatch(loginFailure());
     }   
+};
+
+export const registerUser = async(user, dispatch, navigate) => {
+    dispatch(registerStart());
+    try {
+        await axios.post("/v1/auth/register", user);
+        dispatch(registerSuccess());
+        navigate("/login");
+    } catch (error) {
+        dispatch(registerFailure())
+    }
 }
