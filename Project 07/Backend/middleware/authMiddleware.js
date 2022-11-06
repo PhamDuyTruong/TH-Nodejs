@@ -8,13 +8,13 @@ const authMiddleware = {
             const accessToken = token.split(" ")[1];
             jwt.verify(accessToken, process.env.MY_SECRETKEY, (err, user) => {
                 if(err){
-                    res.status(403).json("Token is not valid");
+                   return res.status(403).json("Token is not valid");
                 }
                 req.user = user;
                 next();
             });
         }else {
-            res.status(401).json("You're not authenticated");
+           return res.status(401).json("You're not authenticated");
         }
     },
 
@@ -23,7 +23,7 @@ const authMiddleware = {
             if(req.user.isAdmin || req.user.id === req.params.id){
                 next();
             }else{
-                res.status(403).json("You're not allowed to delete other")
+                return res.status(403).json("You're not allowed to delete other")
             }
         })
     }
