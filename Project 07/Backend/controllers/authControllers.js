@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 
 const authController = {
@@ -36,7 +37,17 @@ const authController = {
                 res.status(404).json("Wrong password !!!");
             }
             if(user && validPassword){
-                res.status(200).json(user);
+                const accessToken = jwt.sign({
+                    id: user.id,
+                    admin: user.isAdmin
+                }, 
+                process.env.MY_SECRETKEY,
+                {
+                    expiresIn: "30s"
+                }
+                );
+                const {password, ...others} = user._doc;
+                res.status(200).json({...others, accessToken});
             }
         } catch (error) {
             res.status(500).json({error: error})
