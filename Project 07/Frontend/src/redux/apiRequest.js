@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loginFailure, loginStart, loginSuccess, registerFailure, registerStart, registerSuccess } from './authSlice';
+import { loginFailure, loginStart, loginSuccess, logoutFailure, logoutStart, logoutSuccess, registerFailure, registerStart, registerSuccess } from './authSlice';
 import { deleteUserFailure, deleteUserStart, deleteUserSuccess, getUsersFailure, getUsersStart, getUsersSuccess } from './userSlice';
 
 export const loginUser = async(user, dispatch, navigate) => {
@@ -46,5 +46,18 @@ export const deleteUser = async(accessToken, dispatch, id, axiosJwt) => {
         dispatch(deleteUserSuccess(res.data));
     } catch (error) {
         dispatch(deleteUserFailure(error.response.data));
+    }
+};
+
+export const logOut = async(dispatch,id,  navigate, token, axiosJwt) => {
+    dispatch(logoutStart());
+    try {
+        await axiosJwt.post("/v1/auth/logout", id, {
+            headers: {token: `Bearer ${token}`}
+        });
+        dispatch(logoutSuccess());
+        navigate("/login");
+    } catch (error) {
+        dispatch(logoutFailure());
     }
 }
