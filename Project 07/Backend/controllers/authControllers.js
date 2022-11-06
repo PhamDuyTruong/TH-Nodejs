@@ -39,7 +39,7 @@ const authController = {
             if(user && validPassword){
                 const accessToken = jwt.sign({
                     id: user.id,
-                    admin: user.isAdmin
+                    isAdmin: user.isAdmin
                 }, 
                 process.env.MY_SECRETKEY,
                 {
